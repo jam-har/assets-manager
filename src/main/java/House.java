@@ -1,4 +1,5 @@
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class House extends Asset {
 
@@ -49,6 +50,19 @@ public class House extends Asset {
 
     @Override
     public BigDecimal getValue() {
-        return null;
+        BigDecimal pricePerSqFt = getOriginalCost().divide(BigDecimal.valueOf(squareFoot), 2, RoundingMode.HALF_UP);
+        if (condition == 1) {
+            pricePerSqFt = BigDecimal.valueOf(180.00);
+        } else if (condition == 2) {
+            pricePerSqFt = BigDecimal.valueOf(130.00);
+        } else if (condition == 3) {
+            pricePerSqFt = BigDecimal.valueOf(90.00);
+        } else if (condition == 4) {
+            pricePerSqFt = BigDecimal.valueOf(80.00);
+        }
+
+        BigDecimal lotValue = BigDecimal.valueOf(0.25).multiply(BigDecimal.valueOf(squareFoot));
+
+        return lotValue.add(pricePerSqFt);
     }
 }
